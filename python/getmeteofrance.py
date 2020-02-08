@@ -12,5 +12,5 @@ print(d1)
 wget.download(url)
 file = pd.read_csv('synop.'+d1+UTC+'.csv',sep=';')
 ligneutile = file[file['numer_sta']==7481].to_csv(index=False)
-with open("archive/" + d1 + UTC + "lyon.txt","a") as f:
+with open("archive_meteo/" + d1 + UTC + "lyon.txt","a") as f:
     f.write(ligneutile)

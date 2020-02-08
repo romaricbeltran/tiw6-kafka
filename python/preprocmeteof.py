@@ -4,5 +4,5 @@ today = date.today()
 # YYmmdd
 UTC = "00"
 d1 = today.strftime("%Y%m%d")
-file = pd.read_csv('archive/'+d1+UTC+'lyon.txt')
-fileinteret = file[["numer_sta","date","pmer","ff","t","u","vv"]].to_csv('archive/select'+d1+UTC+'lyon.csv', index=False)
+file = pd.read_csv('../archive_meteo/'+d1+UTC+'lyon.txt')
+fileinteret = file[["numer_sta","date","pmer","ff","t","u","vv"]].to_csv('archive_meteo/select'+d1+UTC+'lyon.csv', index=False)
