@@ -1,0 +1,25 @@
+{
+    "serializer": "json",
+    "topology_specs": "topologies/",
+    "virtualenv_specs": "virtualenvs/",
+    "envs": {
+        "local": {
+            "nimbus": "localhost",
+            "use_ssh_for_nimbus": false,
+            "use_virtualenv": false
+        },
+        "prod": {
+            "user": "",
+            "ssh_password": "",
+            "nimbus": "",
+            "workers": [],
+            "log": {
+                "path": "",
+                "max_bytes": 1000000,
+                "backup_count": 10,
+                "level": "info"
+            },
+            "virtualenv_root": ""
+        }
+    }
+}
