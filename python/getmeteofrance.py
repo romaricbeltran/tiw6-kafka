@@ -11,8 +11,12 @@ url = 'https://donneespubliques.meteofrance.fr/donnees_libres/Txt/Synop/synop.'+
 #      https://donneespubliques.meteofrance.fr/donnees_libres/Txt/Synop/synop.2020020406.csv
 print(d1)
 wget.download(url,out="../hist_data_meteo_france/")
+<<<<<<< HEAD
+file = pd.read_csv('../hist_data_meteo_france/synop.'+d1+UTC+'.csv',sep=';')
+=======
 file = pd.read_csv('synop.' + d1 + UTC + '.csv', sep=';')
 print(file)
+>>>>>>> 54a7af49d58b605992480669984b4521a8bca63b
 ligneutile = file[file['numer_sta']==7481].to_csv(index=False)
 with open("../data_meteo_france/" + d1 + UTC + "lyon.csv","w") as f: 
     f.write(ligneutile)
