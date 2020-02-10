@@ -14,12 +14,12 @@ class PreProcAtmoSpout(Spout):
         self.nwriter = NetworkWriter()
         # self.consumer = KafkaConsumer('grp-9-atmo-in', group_id=None, bootstrap_servers=['192.168.76.137:9092'], consumer_timeout_ms=10)
         self.kafka = KafkaClient('192.168.76.137:9092')
-        self.consumer = SimpleConsumer(kafka, None, "grp-9-atmo-in")
+        self.consumer = SimpleConsumer(self.kafka, None, "grp-9-atmo-in")
 
     def next_tuple(self):
         try:
             self.nwriter.write("Try")
-            message = self.consumer.get_message(block=False)[
+            message = self.consumer.get_message(block=False)
             self.nwriter.write(message)
             self.emit([message.value])
         except:
