@@ -10,7 +10,6 @@ import os
 group_name = None
 topic_name = "grp-9-atmo"
 path = os.path.abspath('../kafka_example/message')
-print("path : ", path)
 
 print "Consumer pour le groupe: [%s] et le topic: [%s]" % (group_name, topic_name)
 
