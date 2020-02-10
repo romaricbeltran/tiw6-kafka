@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from streamparse import Bolt, TicklessBatchingBolt, BatchingBolt
-from kafka import KafkaProducer
+from kafka import SimpleProducer, KafkaClient
 import socket
 from utils.network import NetworkWriter
 
@@ -20,7 +20,10 @@ class ExitBolt(Bolt):
 
     def initialize(self, storm_conf, context):
         self.nwriter = NetworkWriter()
-        self.producer = KafkaProducer(bootstrap_servers=['192.168.76.137:9092']) #,
+        self.kafka = KafkaClient('192.168.76.137:9092')
+        self.producer = SimpleProducer(self.kafka, async =True)
+
+        #self.producer = KafkaProducer(bootstrap_servers=['192.168.76.137:9092']) #,
                          # value_serializer=lambda x: dumps(x).encode('utf-8'))
                          
 
@@ -29,6 +32,6 @@ class ExitBolt(Bolt):
         self.nwriter.write(tuple.values[0])
         
         # Send through kafka
-        self.producer.send('grp-9-atmo-out', value=tuple.values[0])
+        self.producer.send('grp-9-atmo-out', tuple.values[0])
 
 
