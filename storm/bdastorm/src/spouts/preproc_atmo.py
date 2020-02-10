@@ -17,13 +17,18 @@ class PreProcAtmoSpout(Spout):
         self.consumer = SimpleConsumer(self.kafka, None, "grp-9-atmo-in")
 
     def next_tuple(self):
-        try:
+        self.nwriter.write("Essaies")
+        for msgCons in self.consumer:
             self.nwriter.write("Try")
-            message = self.consumer.get_message(block=False)
-            self.nwriter.write(message)
-            self.emit([message.value])
-        except:
-            pass
+            self.nwriter.write(msgCons.message.value)
+            self.emit([msgCons.message.value])
+
+        #try:
+        #    message = self.consumer.get_message(block=False)
+        #    self.nwriter.write(message)
+        #    self.emit([message.value])
+        #except:
+        #    pass
 
     def ack(self, tup_id):
         pass  # if a tuple is processed properly, do nothing
