@@ -4,18 +4,20 @@ import json
 import time
 from random import randint
 from streamparse.spout import Spout
-from kafka import KafkaConsumer
+from kafka import KafkaClient, SimpleConsumer
 
 class PreProcMeteoFranceSpout(Spout):
     outputs = ['json']
 
     def initialize(self, stormconf, context):
-        self.consumer = KafkaConsumer('in_test', group_id='my-group', bootstrap_servers=['localhost:9092'], consumer_timeout_ms=10)
+        self.kafka = KafkaClient('192.168.76.137:9092')
+        self.consumer = SimpleConsumer(self.kafka, None, "grp-9-meteo-in")
 
     def next_tuple(self):
         try:
-            message = self.consumer.next_v1()
-            self.emit([message.value])
+            message = self.consumer.consume(block=False)
+            if message is not None:
+                self.emit([message.value])
         except:
             pass
 
