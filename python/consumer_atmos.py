@@ -41,7 +41,6 @@ def write_messages(dest):
         # Ecrire dans la console
         if dest is args.screen_output:
             print(msgCons.message.value)
-            print(msgCons.message.value.decode("utf-8"))
 
         # Ecrire dans un fichier
         if dest is args.file:
