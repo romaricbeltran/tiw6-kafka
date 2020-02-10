@@ -8,7 +8,7 @@ import logging
 import os
 
 group_name = None
-topic_name = "grp-9-atmo"
+topic_name = "grp-9-trafic"
 path = os.path.abspath('../kafka_example/message')
 
 print "Consumer pour le groupe: [%s] et le topic: [%s]" % (group_name, topic_name)

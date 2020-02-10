@@ -1,0 +1,12 @@
+,BD DE STALINGRAD,BD DU 11 NOVEMBRE 1918
+id_ptm,306,1013
+libelle_ptm,Stalingrad_Philip_Vitton,11 Novembre_Tonkin_Condorcet
+debit,240,60
+taux,2,1
+debit_6min,250,70
+taux_6min,2,1
+nbMesureManquante_6mn,0,0
+seuil_orange,20,20
+seuil_rouge,30,30
+hd_mesure,"09/02/2020,21:13:00","09/02/2020,21:13:00"
+hd_mesure_6mn,"09/02/2020,21:06:00","09/02/2020,21:06:00"

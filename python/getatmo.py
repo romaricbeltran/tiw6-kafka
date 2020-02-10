@@ -6,6 +6,8 @@ import urllib.request
 import time
 from datetime import date
 import json
+import os
+os.environ["http_proxy"] = "http://proxy.univ-lyon1.fr:3128"
 
 today = date.today()
 d1 = today.strftime("%Y-%m-%d")

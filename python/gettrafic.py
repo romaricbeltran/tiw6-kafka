@@ -8,7 +8,7 @@ import wget
 import xmltodict
 import json
 import pandas as pd
-
+import producer as prod
 
 now = datetime.now()
 dt_string = now.strftime("%Y-%m-%d")#-%H-%M") #Construction de la date du jour : YYYY-MM-DD
@@ -38,8 +38,12 @@ for i in range(len(listserv)):
             if 'point_de_mesure' in data[0]:
                 listofdicts.append(dict(data[0]['point_de_mesure']))
                 nomderue.append(data[0]['libelle']) 
-            testdatas=pd.DataFrame(listofdicts,index=None).T
-            testdatas.columns=nomderue
-            testdatas.to_csv('../data_trafic/'+listserv[i][:-3]+'csv')
+        testdatas=pd.DataFrame(listofdicts,index=None).T
+        testdatas.columns = nomderue
+        csv_path = '../data_trafic/' + listserv[i][:-3] + 'csv'
+        file_path = []
+        file_path.append(csv_path)
+        testdatas.to_csv(csv_path)
+        prod.main(file_path)
         nbfichierstelecharges+=1
 print(nbfichierstelecharges,' fichiers telecharges')
