@@ -5,12 +5,12 @@ Example race topology
 
 from streamparse import Grouping, Topology
 
-from bolts.preprocmeteo import PreProcBolt, ExitBolt
-from spouts.preproc_meteofrance import PreProcMeteoFranceSpout
+from bolts.preproc_atmo import PreProcBolt, ExitBolt
+from spouts.preproc_atmo import PreProcAtmoSpout
 
 
-class TopologyPreProcMeteoFrance(Topology):
-    spout = PreProcMeteoFranceSpout.spec()
+class TopologyPreProcAtmo(Topology):
+    spout = PreProcAtmoSpout.spec()
     preProcBolt = PreProcBolt.spec(inputs=[spout])
     exit_bolt = ExitBolt.spec(inputs=[preProcBolt])
 

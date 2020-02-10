@@ -9,17 +9,17 @@
             "use_virtualenv": false
         },
         "prod": {
-            "user": "",
+            "user": "p1612598",
             "ssh_password": "",
-            "nimbus": "",
-            "workers": [],
+            "nimbus": "192.168.76.137",
+            "workers": ["192.168.76.137"],
             "log": {
                 "path": "",
                 "max_bytes": 1000000,
                 "backup_count": 10,
                 "level": "info"
             },
-            "virtualenv_root": ""
+            "virtualenv_root": "/home/p1612598/tiw6-kafka/storm/bdastorm"
         }
     }
 }
