@@ -12,13 +12,12 @@ import pandas as pd
 
 now = datetime.now()
 dt_string = now.strftime("%Y-%m-%d")#-%H-%M") #Construction de la date du jour : YYYY-MM-DD
-#print("date du jour: ", dt_string,"\n verification et telechargement des donnees jourlalières manquantes :")
 testdate='2020-02-09'
 url='http://192.168.76.159/data/trafic/'
 files=os.listdir('../hist_data_trafic') #On met sous liste tous les fichiers presents dans hist_data_trafic
 dirtrafic = requests.get(url)
 webpage = html.fromstring(dirtrafic.content)
-listserv=webpage.xpath('//a/@href') #On récupere la liste de tous les href de la page internet (xml)
+listserv=webpage.xpath('//a/@href') #On recupere la liste de tous les href de la page internet (xml)
 regexdujour=re.compile(testdate,re.IGNORECASE) #regex pour recuperer les href du jour
 nbfichierstelecharges=0
 for i in range(len(listserv)):

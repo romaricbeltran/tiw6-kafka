@@ -40,7 +40,7 @@ def write_messages(dest):
     for msgCons in consumer:
         # Ecrire dans la console
         if dest is args.screen_output:
-            print(msgCons)
+            print(msgCons.message.value)
 
         # Ecrire dans un fichier
         if dest is args.file:

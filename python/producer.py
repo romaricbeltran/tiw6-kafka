@@ -31,8 +31,9 @@ def sendCSVFile(producer, f):
 def main(args):
     kafka = KafkaClient('192.168.76.137:9092')
     producer = SimpleProducer(kafka, async =True)
+    print(args[1:])
 
-    for path in args[0:]:
+    for path in args[1:]:
         files = getInput(path)
         for filename in files:
             print("File: ", filename)
@@ -44,5 +45,5 @@ def main(args):
 
     return
 
-# main(sys.argv)
-main(list_data_path)
+main(sys.argv)
+# main(list_data_path)
