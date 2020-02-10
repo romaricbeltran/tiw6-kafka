@@ -32,6 +32,6 @@ class ExitBolt(Bolt):
         self.nwriter.write(tuple.values[0])
         
         # Send through kafka
-        self.producer.send_messages('grp-9-atmo-out', "OK")
+        self.producer.send_messages('grp-9-atmo-out', "OK".encode('utf-8'))
 
 
