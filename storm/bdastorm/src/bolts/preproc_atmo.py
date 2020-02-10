@@ -20,7 +20,7 @@ class ExitBolt(Bolt):
 
     def initialize(self, storm_conf, context):
         self.nwriter = NetworkWriter()
-        self.producer = KafkaProducer(bootstrap_servers=['localhost:9092']) #,
+        self.producer = KafkaProducer(bootstrap_servers=['192.168.76.137:9092']) #,
                          # value_serializer=lambda x: dumps(x).encode('utf-8'))
                          
 
@@ -29,6 +29,6 @@ class ExitBolt(Bolt):
         self.nwriter.write(tuple.values[0])
         
         # Send through kafka
-        self.producer.send('out_test', value=tuple.values[0])
+        self.producer.send('grp-9-atmo-out', value=tuple.values[0])
 
 

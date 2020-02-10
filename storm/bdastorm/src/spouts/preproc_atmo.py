@@ -10,7 +10,7 @@ class PreProcAtmoSpout(Spout):
     outputs = ['json']
 
     def initialize(self, stormconf, context):
-        self.consumer = KafkaConsumer('in_test', group_id='my-group', bootstrap_servers=['localhost:9092'], consumer_timeout_ms=10)
+        self.consumer = KafkaConsumer('grp-9-atmo-in', group_id=None, bootstrap_servers=['localhost:9092'], consumer_timeout_ms=10)
 
     def next_tuple(self):
         try:
