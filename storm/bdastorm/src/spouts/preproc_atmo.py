@@ -18,8 +18,11 @@ class PreProcAtmoSpout(Spout):
 
     def next_tuple(self):
         try:
-            for msgCons in self.consumer:
-                self.emit([msgCons.message.value])
+            message = self.consumer.consume(block=False)
+            if message is not None:
+                self.emit([message.value])
+            #for msgCons in self.consumer:
+            #    self.emit([msgCons.message.value])
             #message = self.consumer.get_message(block=False)
             #self.nwriter.write(message)
             #self.emit([message.value])
