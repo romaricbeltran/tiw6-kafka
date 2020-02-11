@@ -6,7 +6,7 @@ from utils.network import NetworkWriter
 import pandas as pd
 from datetime import date
 
-class PreProcMeteoBolt(Bolt):
+class PreProcBolt(Bolt):
     """Exemple de bolt sans état ni fenêtre.
     """
 
@@ -15,24 +15,28 @@ class PreProcMeteoBolt(Bolt):
 
     def process(self, tuple):
         jsonData = tuple.values[0]
-        file = pd.DataFrame(jsonData) 
-        fileinteret = file[["numer_sta","date","pmer","ff","t","u","vv"]]
+        today = date.today()
+        # YYmmdd
+        UTC = "00"
+        d1 = today.strftime("%Y%m%d")
+        file = pd.read_csv('../archive_meteo/'+d1+UTC+'lyon.txt')
+        fileinteret = file[["numer_sta","date","pmer","ff","t","u","vv"]].to_csv(index=False)
         self.emit([fileinteret], anchors=[tuple])
 
-class SaveFileMeteoBolt(Bolt):
+class ExitBolt(Bolt):
     outputs = ["json"]
 
     def initialize(self, storm_conf, context):
         self.nwriter = NetworkWriter()
-        
+        self.kafka = KafkaClient('192.168.76.137:9092')
+        self.producer = SimpleProducer(self.kafka, async =True)
+                         
     def process(self, tuple):
         # Send to the monitor
-        #self.nwriter.write(tuple.values[0])
-        UTC = "00"
-        today = date.today()
-        d1 = today.strftime("%Y%m%d")
-        tuple.values[0].to_csv('archive_meteo/select'+d1+UTC+'lyon.csv', index=False)
-
+        self.nwriter.write(tuple.values[0])
         
+          # Send through kafka
+        self.producer.send_messages('grp-9-meteo-out', tuple.values[0].encode('utf-8'))
+
 
 

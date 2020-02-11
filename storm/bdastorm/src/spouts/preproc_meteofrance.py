@@ -11,7 +11,7 @@ class PreProcMeteoFranceSpout(Spout):
 
     def initialize(self, stormconf, context):
         self.kafka = KafkaClient('192.168.76.137:9092')
-        self.consumer = SimpleConsumer(self.kafka, None, "grp-9-meteo-in")
+        self.consumer = SimpleConsumer(self.kafka, None, "grp-9-meteo")
 
     def next_tuple(self):
         try:

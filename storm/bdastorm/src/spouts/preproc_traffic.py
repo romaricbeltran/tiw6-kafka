@@ -7,14 +7,14 @@ from streamparse.spout import Spout
 from kafka import KafkaClient, SimpleConsumer
 from utils.network import NetworkWriter
 
-class PreProcAtmoSpout(Spout):
+class PreProcTrafficSpout(Spout):
     outputs = ['json']
 
     def initialize(self, stormconf, context):
         self.nwriter = NetworkWriter()
         # self.consumer = KafkaConsumer('grp-9-atmo-in', group_id=None, bootstrap_servers=['192.168.76.137:9092'], consumer_timeout_ms=10)
         self.kafka = KafkaClient('192.168.76.137:9092')
-        self.consumer = SimpleConsumer(self.kafka, None, "grp-9-atmo-aura")
+        self.consumer = SimpleConsumer(self.kafka, None, "grp-9-trafic")
 
     def next_tuple(self):
         try:

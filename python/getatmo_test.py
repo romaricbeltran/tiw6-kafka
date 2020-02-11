@@ -34,4 +34,3 @@ producer = SimpleProducer(kafka, async =True)
 f = open('../data_atmo/'+d1+'atmo.csv', "r")
 for line in f:
     producer.send_messages("grp-9-atmo-in", line.encode("utf-8"))
-kafka.close()
