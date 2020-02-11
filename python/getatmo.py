@@ -2,6 +2,8 @@ import pandas as pd
 import re
 import numpy as np
 import requests
+from kafka import KafkaClient
+from kafka import SimpleProducer
 import urllib.request
 import time
 from datetime import date
