@@ -20,15 +20,9 @@ class SaveFileClassificationBolt(Bolt):
 
     def initialize(self, storm_conf, context):
         self.nwriter = NetworkWriter()
-        self.producer = KafkaProducer(bootstrap_servers=['localhost:9092']) #,
-                         # value_serializer=lambda x: dumps(x).encode('utf-8'))
-                         
-
+              
     def process(self, tuple):
         # Send to the monitor
         self.nwriter.write(tuple.values[0])
-        
-        # Send through kafka
-        self.producer.send('out_test', value=tuple.values[0])
 
 

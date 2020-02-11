@@ -9,11 +9,11 @@ class PreProcAtmoBolt(Bolt):
     """
 
     # Schéma de sortie du Bolt, ici un seul attribut appelé json
-    outputs = ["json", "alert"]
+    outputs = ["json"]
 
     def process(self, tuple):
         jsonData = tuple.values[0]
-        self.emit([jsonData, jsonData], anchors=[tuple])
+        self.emit([jsonData], anchors=[tuple])
 
 class SaveFileAtmoBolt(Bolt):
     outputs = ["json"]
@@ -23,8 +23,8 @@ class SaveFileAtmoBolt(Bolt):
         
     def process(self, tuple):
         # Send to the monitor
-        self.nwriter.write(tuple.values[1])
+        self.nwriter.write(tuple.values[0])
         
-        
+
 
 
