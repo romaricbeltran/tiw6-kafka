@@ -5,7 +5,7 @@ import socket
 from utils.network import NetworkWriter
 import pandas as pd
 from datetime import date
-import pyhdfs
+#import pyhdfs
 
 class PreProcMeteoBolt(Bolt):
     """Exemple de bolt sans état ni fenêtre.
@@ -25,7 +25,7 @@ class SaveFileMeteoBolt(Bolt):
 
     def initialize(self, storm_conf, context):
         self.nwriter = NetworkWriter()
-        self.fs = pyhdfs.HdfsClient(hosts='192.168.76.137:50070', user_name='p1612598')
+        #self.fs = pyhdfs.HdfsClient(hosts='192.168.76.137:50070', user_name='p1612598')
         
     def process(self, tuple):
         # Send to the monitor
@@ -35,15 +35,17 @@ class SaveFileMeteoBolt(Bolt):
         d1 = today.strftime("%Y%m%d")
         #tuple.values[0].to_csv('archive_meteo/select'+d1+UTC+'lyon.csv', index=False)
 
-        if 'archive_meteo' not in self.fs.listdir('/'):
-            self.fs.mkdirs('/archive_meteo')
+        #if 'archive_meteo' not in self.fs.listdir('/'):
+        #    self.fs.mkdirs('/archive_meteo')
 
         filename = '/archive_meteo/select'+d1+UTC+'lyon.csv'
 
-        if not self.fs.exists(filename):
-            self.fs.create(filename, tuple.values[0])
-        else:
-            self.fs.append(filename, tuple.values[0])
-            
+        #if not self.fs.exists(filename):
+        #    self.fs.create(filename, tuple.values[0])
+        #else:
+        #    self.fs.append(filename, tuple.values[0])
+
+        exec("hdfs dfs -mkdir /archive_meteo") 
+        exec('echo "' + str(tuple.values[0]) + '" | hdfs dfs -appendToFile - ' + filename)   
 
 
