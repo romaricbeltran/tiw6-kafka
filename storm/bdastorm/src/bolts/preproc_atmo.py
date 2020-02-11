@@ -39,6 +39,11 @@ class AlertBolt(Bolt):
         
         if data[0] is not 'pas_de_vigilance':
             self.nwriter.write(jsonData)
+            filename = 'archive_atmo/alert_atmo.csv'
+
+            subprocess.run(['hdfs', 'dfs', '-mkdir', 'archive_atmo'])
+            subprocess.Popen('echo "' + tuple.values[0] + '" | hdfs dfs -appendToFile - ' + filename, shell=True)  
+
 
 class SaveFileAtmoBolt(Bolt):
     outputs = ["json"]
@@ -55,7 +60,7 @@ class SaveFileAtmoBolt(Bolt):
         filename = 'archive_atmo/'+d1+'atmo.csv'
 
         subprocess.run(['hdfs', 'dfs', '-mkdir', 'archive_atmo'])
-        subprocess.Popen(('echo', '"' + tuple.values[0] + '"', '|', 'hdfs', 'dfs', '-appendToFile', '-', filename), shell=True)  
+        subprocess.Popen('echo "' + tuple.values[0] + '" | hdfs dfs -appendToFile - ' + filename, shell=True)  
 
 
 
