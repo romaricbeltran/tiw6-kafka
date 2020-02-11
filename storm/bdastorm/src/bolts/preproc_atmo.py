@@ -36,7 +36,7 @@ class AlertBolt(Bolt):
         jsonData = tuple.values[0]
         data = jsonData.split(',')
         
-        if data[5] is not 'pas_de_vigilance':
+        if data[0] is not 'pas_de_vigilance':
             self.nwriter.write(jsonData)
 
 class SaveFileAtmoBolt(Bolt):
