@@ -11,18 +11,12 @@ class PreProcMeteoFranceSpout(Spout):
 
     def initialize(self, stormconf, context):
         self.kafka = KafkaClient('192.168.76.137:9092')
-        #self.consumer = SimpleConsumer(self.kafka, None, "grp-9-meteo")
-        self.topic = self.kafka.topics['grp-9-meteo']
-        self.consumer = self.topic.get_simple_consumer(
-            consumer_group=None,
-            consumer_timeout_ms=1000,
-            reset_offset_on_start=False
-        )
+        self.consumer = SimpleConsumer(self.kafka, None, "grp-9-meteo")
 
     def next_tuple(self):
-        for message in self.consumer:
-            if message is not None:
-                self.emit([message.value])
+        for msgCons in self.consumer:
+            if msgCons is not None:
+                self.emit([msgCons.message.value])
         #message = self.consumer.consume(block=False)
         #if message is not None:
         #    self.emit([message.value])
