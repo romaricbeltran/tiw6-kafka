@@ -14,12 +14,9 @@ class PreProcMeteoFranceSpout(Spout):
         self.consumer = SimpleConsumer(self.kafka, None, "grp-9-meteo")
 
     def next_tuple(self):
-        try:
-            message = self.consumer.consume(block=False)
-            if message is not None:
-                self.emit([message.value])
-        except:
-            pass
+        message = self.consumer.consume(block=False)
+        if message is not None:
+            self.emit([message.value])
 
     def ack(self, tup_id):
         pass  # if a tuple is processed properly, do nothing
