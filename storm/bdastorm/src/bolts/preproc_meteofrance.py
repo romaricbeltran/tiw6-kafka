@@ -5,6 +5,7 @@ import socket
 from utils.network import NetworkWriter
 import pandas as pd
 from datetime import date
+import pyhdfs
 
 class PreProcMeteoBolt(Bolt):
     """Exemple de bolt sans état ni fenêtre.
@@ -15,15 +16,16 @@ class PreProcMeteoBolt(Bolt):
 
     def process(self, tuple):
         jsonData = tuple.values[0]
-        file = pd.DataFrame(jsonData) 
-        fileinteret = file[["numer_sta","date","pmer","ff","t","u","vv"]]
-        self.emit([fileinteret], anchors=[tuple])
+        #file = pd.DataFrame(jsonData) 
+        #fileinteret = file[["numer_sta","date","pmer","ff","t","u","vv"]]
+        self.emit([jsonData], anchors=[tuple])
 
 class SaveFileMeteoBolt(Bolt):
     outputs = ["json"]
 
     def initialize(self, storm_conf, context):
         self.nwriter = NetworkWriter()
+        self.fs = pyhdfs.HdfsClient(hosts='192.168.76.137:50070', user_name='p1612598')
         
     def process(self, tuple):
         # Send to the monitor
@@ -31,8 +33,12 @@ class SaveFileMeteoBolt(Bolt):
         UTC = "00"
         today = date.today()
         d1 = today.strftime("%Y%m%d")
-        tuple.values[0].to_csv('archive_meteo/select'+d1+UTC+'lyon.csv', index=False)
+        #tuple.values[0].to_csv('archive_meteo/select'+d1+UTC+'lyon.csv', index=False)
+        data = tuple.values[0].to_csv(index=False)
 
-        
+        if 'archive_meteo' not in self.fs.listdir('/'):
+            self.fs.mkdirs('/archive_meteo')
+
+        self.fs.create('/archive_meteo/select'+d1+UTC+'lyon.csv', data)
 
 
