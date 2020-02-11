@@ -36,7 +36,7 @@ class SaveFileAtmoBolt(Bolt):
 
         filename = 'archive_atmo/'+d1+'atmo.csv'
 
-        exec("import subprocess\nsubprocess.run(['hdfs', 'dfs', '-mkdir', 'archive_atmo'])\nsubprocess.run(['echo', '\""+ str(tuple.values[0]) +"\"', '|', 'hdfs', 'dfs', '-appendToFile', '-', '"+ filename +"'])")  
+        exec("import subprocess\nsubprocess.run(['hdfs', 'dfs', '-mkdir', 'archive_atmo'])\ntmp='"+str(tuple.values[0])+"'\nsubprocess.run(['echo', tmp, '|', 'hdfs', 'dfs', '-appendToFile', '-', '"+ filename +"'])")  
 
 
 
