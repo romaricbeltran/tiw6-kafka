@@ -4,6 +4,7 @@ from kafka import SimpleProducer, KafkaClient
 import socket
 from datetime import date
 from utils.network import NetworkWriter
+import subprocess
 
 class PreProcAtmoBolt(Bolt):
     """Exemple de bolt sans état ni fenêtre.
@@ -53,7 +54,8 @@ class SaveFileAtmoBolt(Bolt):
 
         filename = 'archive_atmo/'+d1+'atmo.csv'
 
-        #exec("import subprocess\nsubprocess.run(['hdfs', 'dfs', '-mkdir', 'archive_atmo'])\ntmp='"+str(tuple.values[0])+"'\nsubprocess.run(['echo', tmp, '|', 'hdfs', 'dfs', '-appendToFile', '-', '"+ filename +"'])")  
+        subprocess.run(['hdfs', 'dfs', '-mkdir', 'archive_atmo'])
+        subprocess.run(['echo', '"' + tuple.values[0] + '"', '|', 'hdfs', 'dfs', '-appendToFile', '-', filename])  
 
 
 
