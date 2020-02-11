@@ -14,7 +14,7 @@ now = datetime.now()
 dt_string = now.strftime("%Y-%m-%d")#-%H-%M") #Construction de la date du jour : YYYY-MM-DD
 testdate='2020-02-09'
 url='http://192.168.76.159/data/trafic/'
-files=os.listdir('../hist_data_trafic') #On met sous liste tous les fichiers presents dans hist_data_trafic
+files=os.listdir('/home/p1612598/tiw6-kafka/hist_data_trafic') #On met sous liste tous les fichiers presents dans hist_data_trafic
 dirtrafic = requests.get(url)
 webpage = html.fromstring(dirtrafic.content)
 listserv=webpage.xpath('//a/@href') #On recupere la liste de tous les href de la page internet (xml)
@@ -22,8 +22,8 @@ regexdujour=re.compile(testdate,re.IGNORECASE) #regex pour recuperer les href du
 nbfichierstelecharges=0
 for i in range(len(listserv)):
     if re.search(regexdujour,listserv[i]) and not listserv[i] in files: #Si il y a des fichiers du jour qui ne sont pas dans notre repertoire :
-        wget.download(url+listserv[i],out='../hist_data_trafic/') #On les dwnl
-        with open('../hist_data_trafic/'+listserv[i]) as fd:
+        wget.download(url+listserv[i],out='/home/p1612598/tiw6-kafka/hist_data_trafic/') #On les dwnl
+        with open('/home/p1612598/tiw6-kafka/hist_data_trafic/'+listserv[i]) as fd:
             doc = xmltodict.parse(fd.read())
         newdic=[dict(od) for od in doc['Etats_Troncons_Web_InfoTrafic']['troncon_web_infotrafic'] ]
         data1=list(filter(lambda dic: dic['id'] == '1108', newdic)) #bvd stalingrad
@@ -40,7 +40,7 @@ for i in range(len(listserv)):
                 nomderue.append(data[0]['libelle']) 
         testdatas=pd.DataFrame(listofdicts,index=None).T
         testdatas.columns = nomderue
-        csv_path = '../data_trafic/' + listserv[i][:-3] + 'csv'
+        csv_path = '/home/p1612598/tiw6-kafka/data_trafic/' + listserv[i][:-3] + 'csv'
         file_path = []
         file_path.append(csv_path)
         testdatas.to_csv(csv_path)
