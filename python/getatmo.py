@@ -23,7 +23,7 @@ datajson=datajson.drop(['licence','commune','code_insee','id_com'], axis=1)
 if datajson["vigilances"][0]==None:
     datajson["vigilances"][0]="pas_de_vigilance"
 datajson=datajson
-datajson.to_csv('../data_atmo/'+d1+'atmo.csv', index=None) #On sauvegarde le dataframe avec les vars d'interet dans le dossier data_atmo. Il est desormais possible re retirer les variables lignes par ligne
+datajson.to_csv('/home/p1612598/tiw6-kafka/data_atmo/'+d1+'atmo.csv', index=None) #On sauvegarde le dataframe avec les vars d'interet dans le dossier data_atmo. Il est desormais possible re retirer les variables lignes par ligne
 
 kafka = KafkaClient('192.168.76.137:9092')
 producer = SimpleProducer(kafka, async=True)
