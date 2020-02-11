@@ -34,9 +34,9 @@ class SaveFileAtmoBolt(Bolt):
         today = date.today()
         d1 = today.strftime("%Y%m%d")
 
-        filename = '../archive_atmo/'+d1+'atmo.csv'
+        filename = 'archive_atmo/'+d1+'atmo.csv'
 
-        exec("hdfs dfs -mkdir /archive_atmo") 
+        exec("hdfs dfs -mkdir archive_atmo") 
         exec('echo "' + str(tuple.values[0]) + '" | hdfs dfs -appendToFile - ' + filename)   
 
 

@@ -38,14 +38,14 @@ class SaveFileMeteoBolt(Bolt):
         #if 'archive_meteo' not in self.fs.listdir('/'):
         #    self.fs.mkdirs('/archive_meteo')
 
-        filename = '/archive_meteo/select'+d1+UTC+'lyon.csv'
+        filename = 'archive_meteo/select'+d1+UTC+'lyon.csv'
 
         #if not self.fs.exists(filename):
         #    self.fs.create(filename, tuple.values[0])
         #else:
         #    self.fs.append(filename, tuple.values[0])
 
-        exec("hdfs dfs -mkdir /archive_meteo") 
+        exec("hdfs dfs -mkdir archive_meteo") 
         exec('echo "' + str(tuple.values[0]) + '" | hdfs dfs -appendToFile - ' + filename)   
 
 
