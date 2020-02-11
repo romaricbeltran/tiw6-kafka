@@ -4,25 +4,26 @@ import json
 import time
 from random import randint
 from streamparse.spout import Spout
-from kafka import KafkaClient, SimpleConsumer
+from pykafka import KafkaClient
+from pykafka.common import OffsetType
 from utils.network import NetworkWriter
 
 class PreProcTrafficSpout(Spout):
     outputs = ['json']
 
     def initialize(self, stormconf, context):
-        self.nwriter = NetworkWriter()
-        # self.consumer = KafkaConsumer('grp-9-atmo-in', group_id=None, bootstrap_servers=['192.168.76.137:9092'], consumer_timeout_ms=10)
-        self.kafka = KafkaClient('192.168.76.137:9092')
-        self.consumer = SimpleConsumer(self.kafka, None, "grp-9-trafic")
+        self.client = KafkaClient('192.168.76.137:9092')
+        self.topic = self.client.topics['grp-9-trafic']
+        self.consumer = self.topic.get_simple_consumer(
+            auto_offset_reset=OffsetType.EARLIEST,
+            consumer_timeout_ms=1000,
+            reset_offset_on_start=False)
 
     def next_tuple(self):
-        try:
-            message = self.consumer.consume(block=False)
+        #message = self.consumer.consume(block=False)
+        for message in self.consumer:
             if message is not None:
                 self.emit([message.value])
-        except:
-            pass
 
     def ack(self, tup_id):
         pass  # if a tuple is processed properly, do nothing

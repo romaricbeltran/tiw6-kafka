@@ -15,9 +15,9 @@ class PreProcMeteoBolt(Bolt):
 
     def process(self, tuple):
         jsonData = tuple.values[0]
-        file = pd.DataFrame(jsonData) 
-        fileinteret = file[["numer_sta","date","pmer","ff","t","u","vv"]]
-        self.emit([fileinteret], anchors=[tuple])
+        #file = pd.DataFrame(jsonData) 
+        #fileinteret = file[["numer_sta","date","pmer","ff","t","u","vv"]]
+        self.emit([jsonData], anchors=[tuple])
 
 class SaveFileMeteoBolt(Bolt):
     outputs = ["json"]

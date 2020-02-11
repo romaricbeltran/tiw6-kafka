@@ -17,7 +17,6 @@ class PreProcMeteoFranceSpout(Spout):
             auto_offset_reset=OffsetType.EARLIEST,
             consumer_timeout_ms=1000,
             reset_offset_on_start=False)
-        #self.consumer = SimpleConsumer(self.kafka, None, "grp-9-meteo-in")
 
     def next_tuple(self):
         #message = self.consumer.consume(block=False)
