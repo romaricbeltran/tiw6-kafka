@@ -55,7 +55,7 @@ class SaveFileAtmoBolt(Bolt):
         filename = 'archive_atmo/'+d1+'atmo.csv'
 
         subprocess.run(['hdfs', 'dfs', '-mkdir', 'archive_atmo'])
-        subprocess.run(['echo', '"' + tuple.values[0] + '"', '|', 'hdfs', 'dfs', '-appendToFile', '-', filename])  
+        subprocess.Popen(('echo', '"' + tuple.values[0] + '"', '|', 'hdfs', 'dfs', '-appendToFile', '-', filename), shell=True)  
 
 
 
