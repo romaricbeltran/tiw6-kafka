@@ -5,7 +5,7 @@ import socket
 from utils.network import NetworkWriter
 import pandas as pd
 from datetime import date
-#import pyhdfs
+import subprocess
 
 class PreProcMeteoBolt(Bolt):
     """Exemple de bolt sans état ni fenêtre.
