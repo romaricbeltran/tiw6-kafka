@@ -5,7 +5,6 @@ import time
 from random import randint
 from streamparse.spout import Spout
 from kafka import KafkaClient, SimpleConsumer
-from kafka.common import OffsetType
 
 class PreProcMeteoFranceSpout(Spout):
     outputs = ['json']
@@ -16,7 +15,6 @@ class PreProcMeteoFranceSpout(Spout):
         self.topic = self.kafka.topics['grp-9-meteo']
         self.consumer = self.topic.get_simple_consumer(
             consumer_group=None,
-            auto_offset_reset=OffsetType.EARLIEST,
             consumer_timeout_ms=1000,
             reset_offset_on_start=False
         )
