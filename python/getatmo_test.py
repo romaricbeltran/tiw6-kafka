@@ -31,7 +31,7 @@ datajson.to_csv('../data_atmo/'+d1+'atmo.csv', index=None) #On sauvegarde le dat
 kafka = KafkaClient('192.168.76.137:9092')
 producer = SimpleProducer(kafka, async =True)
 
-f = open('../hist_data_atmo/'+d1+'atmo.csv', "r")
+f = open('../data_atmo/'+d1+'atmo.csv', "r")
 for line in f:
     producer.send_messages("grp-9-atmo-in", line)
 kafka.close()

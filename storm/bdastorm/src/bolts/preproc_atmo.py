@@ -9,11 +9,11 @@ class PreProcBolt(Bolt):
     """
 
     # Schéma de sortie du Bolt, ici un seul attribut appelé json
-    outputs = ["json"]
+    outputs = ["json", "alert"]
 
     def process(self, tuple):
         jsonData = tuple.values[0]
-        self.emit([jsonData], anchors=[tuple])
+        self.emit([jsonData, jsonData], anchors=[tuple])
 
 class ExitBolt(Bolt):
     outputs = ["json"]
@@ -29,7 +29,7 @@ class ExitBolt(Bolt):
 
     def process(self, tuple):
         # Send to the monitor
-        self.nwriter.write(tuple.values[0])
+        self.nwriter.write(tuple.values[1])
         
         # Send through kafka
         self.producer.send_messages('grp-9-atmo-out', tuple.values[0].encode('utf-8'))
