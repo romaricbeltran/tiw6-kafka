@@ -9,7 +9,7 @@ from bolts.classification import ClassificationBolt, SaveFileClassificationBolt
 from spouts.preproc_atmo import PreProcAtmoSpout
 from spouts.preproc_meteofrance import PreProcMeteoFranceSpout
 from spouts.preproc_traffic import PreProcTrafficSpout
-from bolts.preproc_atmo import PreProcAtmoBolt, SaveFileAtmoBolt
+from bolts.preproc_atmo import PreProcAtmoBolt, SaveFileAtmoBolt, AlertBolt
 from bolts.preproc_meteofrance import PreProcMeteoBolt, SaveFileMeteoBolt
 from bolts.preproc_traffic import PreProcTrafficBolt, SaveFileTrafficBolt
 
@@ -22,6 +22,8 @@ class TopologyClassification(Topology):
     meteo_bolt = PreProcMeteoBolt.spec(inputs=[meteo_spout])
     traffic_bolt = PreProcTrafficBolt.spec(inputs=[traffic_spout])
     
+    alert_atmo_bolt = AlertBolt.spec(inputs=[atmo_bolt])
+
     save_atmo_bolt = SaveFileAtmoBolt.spec(inputs=[atmo_bolt])
     save_meteo_bolt = SaveFileMeteoBolt.spec(inputs=[meteo_bolt])
     save_traffic_bolt = SaveFileTrafficBolt.spec(inputs=[traffic_bolt])

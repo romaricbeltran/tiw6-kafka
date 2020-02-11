@@ -22,6 +22,23 @@ class PreProcAtmoBolt(Bolt):
         #datajson=datajson
         self.emit([jsonData], anchors=[tuple])
 
+class AlertBolt(Bolt):
+    """Exemple de bolt sans état ni fenêtre.
+    """
+
+    # Schéma de sortie du Bolt, ici un seul attribut appelé json
+    outputs = ["json"]
+
+    def initialize(self, storm_conf, context):
+        self.nwriter = NetworkWriter()
+
+    def process(self, tuple):
+        jsonData = tuple.values[0]
+        data = jsonData.split(',')
+        
+        if data[5] is not 'pas_de_vigilance':
+            self.nwriter.write(jsonData)
+
 class SaveFileAtmoBolt(Bolt):
     outputs = ["json"]
 
@@ -30,13 +47,13 @@ class SaveFileAtmoBolt(Bolt):
         
     def process(self, tuple):
         # Send to the monitor
-        self.nwriter.write(tuple.values[0])
+        #self.nwriter.write(tuple.values[0])
         today = date.today()
         d1 = today.strftime("%Y%m%d")
 
         filename = 'archive_atmo/'+d1+'atmo.csv'
 
-        exec("import subprocess\nsubprocess.run(['hdfs', 'dfs', '-mkdir', 'archive_atmo'])\ntmp='"+str(tuple.values[0])+"'\nsubprocess.run(['echo', tmp, '|', 'hdfs', 'dfs', '-appendToFile', '-', '"+ filename +"'])")  
+        #exec("import subprocess\nsubprocess.run(['hdfs', 'dfs', '-mkdir', 'archive_atmo'])\ntmp='"+str(tuple.values[0])+"'\nsubprocess.run(['echo', tmp, '|', 'hdfs', 'dfs', '-appendToFile', '-', '"+ filename +"'])")  
 
 
 

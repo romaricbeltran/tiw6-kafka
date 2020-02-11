@@ -19,7 +19,7 @@ def getInput(inputPath):
 
 def sendCSVFile(producer, f):
     for line in f:
-        producer.send_messages("grp-9-trafic", line.encode('utf-8'))
+        producer.send_messages("grp-9-trafic_1", line.encode('utf-8'))
 
 def main(args):
     kafka = KafkaClient('192.168.76.137:9092')
