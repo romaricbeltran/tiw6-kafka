@@ -24,4 +24,4 @@ with open("../data_meteo_france/" + d1 + UTC + "lyon.csv","w") as f:
 kafka_ = KafkaClient('192.168.76.137:9092')
 producer_ = SimpleProducer(kafka_, async =True)
 
-producer_.send_messages("grp-9-meteo_1", ligneutile.encode("utf-8"))
+producer_.send_messages("grp-9-topic-meteo", ligneutile.encode("utf-8"))

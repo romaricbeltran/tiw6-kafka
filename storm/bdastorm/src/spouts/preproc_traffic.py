@@ -13,7 +13,7 @@ class PreProcTrafficSpout(Spout):
 
     def initialize(self, stormconf, context):
         self.client = KafkaClient('192.168.76.137:9092')
-        self.topic = self.client.topics['grp-9-trafic_1']
+        self.topic = self.client.topics['grp-9-topic-trafic']
         self.consumer = self.topic.get_simple_consumer(
             auto_offset_reset=OffsetType.EARLIEST,
             consumer_timeout_ms=1000,
