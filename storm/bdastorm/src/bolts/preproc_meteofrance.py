@@ -34,11 +34,16 @@ class SaveFileMeteoBolt(Bolt):
         today = date.today()
         d1 = today.strftime("%Y%m%d")
         #tuple.values[0].to_csv('archive_meteo/select'+d1+UTC+'lyon.csv', index=False)
-        data = tuple.values[0].to_csv(index=False)
 
         if 'archive_meteo' not in self.fs.listdir('/'):
             self.fs.mkdirs('/archive_meteo')
 
-        self.fs.create('/archive_meteo/select'+d1+UTC+'lyon.csv', data)
+        filename = '/archive_meteo/select'+d1+UTC+'lyon.csv'
+
+        if not self.fs.exists(filename):
+            self.fs.create(filename, tuple.values[0])
+        else:
+            self.fs.append(filename, tuple.values[0])
+            
 
 
