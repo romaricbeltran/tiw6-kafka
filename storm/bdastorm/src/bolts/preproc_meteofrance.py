@@ -45,7 +45,6 @@ class SaveFileMeteoBolt(Bolt):
         #else:
         #    self.fs.append(filename, tuple.values[0])
 
-        exec("hdfs dfs -mkdir archive_meteo") 
-        exec('echo "' + str(tuple.values[0]) + '" | hdfs dfs -appendToFile - ' + filename)   
+        exec("import subprocess\nsubprocess.run(['hdfs', 'dfs', '-mkdir', 'archive_meteo'])\nsubprocess.run(['echo', '\""+ str(tuple.values[0]) +"\"', '|', 'hdfs', 'dfs', '-appendToFile', '-', '"+ filename +"'])") 
 
 
